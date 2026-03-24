@@ -10,7 +10,7 @@ static bool test_board_container() {
     Board b(10, 10);
     b.setCell(&c, 0, 0);
     bool pass = (b.getCell(0, 0) == &c);
-    std::cout << (pass ? "test_board_container: PASSED\n" : "test_board_container: FAILED\n");
+    if (pass) std::cout << ("Comprobado\n");
     return pass;
 }
 
@@ -28,7 +28,7 @@ static bool test_dump_load_board() {
     if (std::filesystem::exists(getDataDirPath() + "dump_board.txt")) {
         std::filesystem::remove(getDataDirPath() + "dump_board.txt");
     }
-    std::cout << (pass ? "test_dump_load_board: PASSED\n" : "test_dump_load_board: FAILED\n");
+    if (pass) std::cout << ("Comprobado\n");
     return pass;
 }
 
@@ -46,7 +46,7 @@ static bool test_dump_load_game() {
     if (std::filesystem::exists(getDataDirPath() + "dump_game.txt")) {
         std::filesystem::remove(getDataDirPath() + "dump_game.txt");
     }
-    std::cout << (pass ? "test_dump_load_game: PASSED\n" : "test_dump_load_game: FAILED\n");
+    if (pass) std::cout << ("Comprobado\n");
     return pass;
 }
 
@@ -60,14 +60,14 @@ static bool test_constructor_empty() {
             if (b.getCell(x, y) != nullptr) pass = false;
         }
     }
-    std::cout << (pass ? "test_constructor_empty: PASSED\n" : "test_constructor_empty: FAILED\n");
+    if (pass) std::cout << ("Comprobado\n");
     return pass;
 }
 
 static bool test_load_nonexistent() {
     Board b(10, 10);
     bool pass = (b.load("fichero_inventado_xyz.txt") == false);
-    std::cout << (pass ? "test_load_nonexistent: PASSED\n" : "test_load_nonexistent: FAILED\n");
+    if (pass) std::cout << ("Comprobado\n");
     return pass;
 }
 
@@ -78,7 +78,7 @@ static bool test_no_false_positives() {
     b.setCell(&c1, 0, 0);
     b.setCell(&c2, 1, 0);
     bool pass = (!b.shouldExplode(0, 0) && !b.shouldExplode(1, 0));
-    std::cout << (pass ? "test_no_false_positives: PASSED\n" : "test_no_false_positives: FAILED\n");
+    if (pass) std::cout << ("Comprobado\n");
     return pass;
 }
 
@@ -91,7 +91,7 @@ static bool test_explode_horizontal() {
     b.setCell(&c2, 1, 0);
     b.setCell(&c3, 2, 0);
     bool pass = (b.shouldExplode(0, 0) && b.shouldExplode(1, 0) && b.shouldExplode(2, 0));
-    std::cout << (pass ? "test_explode_horizontal: PASSED\n" : "test_explode_horizontal: FAILED\n");
+    if (pass) std::cout << ("Comprobado\n");
     return pass;
 }
 
@@ -104,7 +104,7 @@ static bool test_explode_vertical() {
     b.setCell(&c2, 2, 1);
     b.setCell(&c3, 2, 2);
     bool pass = (b.shouldExplode(2, 0) && b.shouldExplode(2, 1) && b.shouldExplode(2, 2));
-    std::cout << (pass ? "test_explode_vertical: PASSED\n" : "test_explode_vertical: FAILED\n");
+    if (pass) std::cout << ("Comprobado\n");
     return pass;
 }
 
@@ -133,7 +133,7 @@ static bool test_chain_reaction() {
             if (b.getCell(x, y) != nullptr) pass = false;
         }
     }
-    std::cout << (pass ? "test_chain_reaction: PASSED\n" : "test_chain_reaction: FAILED\n");
+    if(pass) std::cout << ("Comprobado\n");
     return pass;
 }
 

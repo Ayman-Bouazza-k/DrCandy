@@ -1,3 +1,4 @@
+
 #include "board.h"
 #include <iostream>
 #include <fstream>
@@ -49,34 +50,55 @@ int Board::getHeight() const
 bool Board::shouldExplode(int x, int y) const
 {
     Candy* center = getCell(x, y);
-    if (center == nullptr) return false;
-    
+    if (center == nullptr) {
+        return false;
+    }
+
     CandyType type = center->getType();
-    
-    // Check horizontal
-    int count = 1;
-    for (int i = 1; x - i >= 0 && getCell(x - i, y) && getCell(x - i, y)->getType() == type; ++i) count++;
-    for (int i = 1; x + i < m_width && getCell(x + i, y) && getCell(x + i, y)->getType() == type; ++i) count++;
+    int count = 0;
+
+ 
+    //HORIZONTAL
+    count = 1; 
+    for (int i = 1; getCell(x - i, y) != nullptr && getCell(x - i, y)->getType() == type; i++) {
+        count++;
+    }
+    for (int i = 1; getCell(x + i, y) != nullptr && getCell(x + i, y)->getType() == type; i++) {
+        count++;
+    }
     if (count >= SHORTEST_EXPLOSION_LINE) return true;
-    
-    // Check vertical
+
+    // VERTICAL
+    count = 1; 
+    for (int i = 1; getCell(x, y - i) != nullptr && getCell(x, y - i)->getType() == type; i++) {
+        count++;
+    }
+    for (int i = 1; getCell(x, y + i) != nullptr && getCell(x, y + i)->getType() == type; i++) {
+        count++;
+    }
+    if (count >= SHORTEST_EXPLOSION_LINE) return true; 
+    // DIAGONAL 1
+  
     count = 1;
-    for (int i = 1; y - i >= 0 && getCell(x, y - i) && getCell(x, y - i)->getType() == type; ++i) count++;
-    for (int i = 1; y + i < m_height && getCell(x, y + i) && getCell(x, y + i)->getType() == type; ++i) count++;
+    for (int i = 1; getCell(x - i, y - i) != nullptr && getCell(x - i, y - i)->getType() == type; i++) {
+        count++;
+    }
+    for (int i = 1; getCell(x + i, y + i) != nullptr && getCell(x + i, y + i)->getType() == type; i++) {
+        count++;
+    }
     if (count >= SHORTEST_EXPLOSION_LINE) return true;
-    
-    // Check diagonal \ (top-left to bottom-right)
+    // DIAGONAL inversa 
+  
     count = 1;
-    for (int i = 1; x - i >= 0 && y - i >= 0 && getCell(x - i, y - i) && getCell(x - i, y - i)->getType() == type; ++i) count++;
-    for (int i = 1; x + i < m_width && y + i < m_height && getCell(x + i, y + i) && getCell(x + i, y + i)->getType() == type; ++i) count++;
+    for (int i = 1; getCell(x - i, y + i) != nullptr && getCell(x - i, y + i)->getType() == type; i++) {
+        count++;
+    }
+    for (int i = 1; getCell(x + i, y - i) != nullptr && getCell(x + i, y - i)->getType() == type; i++) {
+        count++;
+    }
     if (count >= SHORTEST_EXPLOSION_LINE) return true;
-    
-    // Check diagonal / (bottom-left to top-right)
-    count = 1;
-    for (int i = 1; x - i >= 0 && y + i < m_height && getCell(x - i, y + i) && getCell(x - i, y + i)->getType() == type; ++i) count++;
-    for (int i = 1; x + i < m_width && y - i >= 0 && getCell(x + i, y - i) && getCell(x + i, y - i)->getType() == type; ++i) count++;
-    if (count >= SHORTEST_EXPLOSION_LINE) return true;
-    
+
+
     return false;
 }
 
